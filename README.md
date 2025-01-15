@@ -59,7 +59,7 @@ Download datas.
 
 Download metadatas and put under  `data/imagenet` folder.
 
-- `imagenet-classes.txt`: https://drive.google.com/file/d/1-61f_ol79pViBFDG_IDlUQSwoLcn2XXF/view
+- `classnames.txt`: https://drive.google.com/file/d/1-61f_ol79pViBFDG_IDlUQSwoLcn2XXF/view
 - `wordnet_is_a.txt`: http://www.image-net.org/data/wordnet.is_a.txt
 - `words.txt`: http://www.image-net.org/data/words.txt
 

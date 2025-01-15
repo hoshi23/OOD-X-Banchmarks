@@ -13,7 +13,7 @@ from utils.datasets import (
 
 
 @DATASET_REGISTRY.register()
-class ImageNetHard(DatasetBase):
+class ImageNetX(DatasetBase):
 
     dataset_dir = "imagenet"
 
@@ -65,74 +65,34 @@ class ImageNetHard(DatasetBase):
             labels.add(item.label)
         labels = list(labels)
         labels.sort()
+        id_labels: list[int] = None
+        ood_labels: list[int] = None
         if cfg.DATASET.SUBSAMPLE_CLASSES == "random":
             preprocessed_classes = os.path.join(
-                self.split_fewshot_dir, "split_classes.pkl"
+                self.split_fewshot_dir, "split_random_classes.pkl"
             )
             if os.path.exists(preprocessed_classes):
                 with open(preprocessed_classes, "rb") as f:
                     data = pickle.load(f)
-                    original_base_labels, original_new_labels = (
-                        data["base"],
-                        data["new"],
+                    id_labels, ood_labels = (
+                        data["id"],
+                        data["ood"],
                     )
             else:
-                original_base_labels, original_new_labels = (
-                    make_ramdom_subsample_classes(labels=labels)
-                )
-                data = {"base": original_base_labels, "new": original_new_labels}
+                id_labels, ood_labels = make_ramdom_subsample_classes(labels=labels)
+                data = {"id": id_labels, "ood": ood_labels}
                 with open(preprocessed_classes, "wb") as f:
                     pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
-            base_labels = original_base_labels
-            new_labels = original_new_labels
-            # for item in train:
-            #     if item.classname in original_base_labels:
-            #         base_labels.add(item.label)
-            #     elif item.classname in original_new_labels:
-            #         new_labels.add(item.label)
-            # base_labels = list(base_labels)
-            # new_labels = list(new_labels)
-            print(f"base_labels: {base_labels}\nnew_labels: {new_labels}")
-            train = subsample_classes(
-                train, labels=base_labels, subsample="base", custom=True
-            )
-            test_base = subsample_classes(
-                test, labels=base_labels, subsample="base", custom=True
-            )
-            test_new = subsample_classes(
-                test, labels=new_labels, subsample="new", custom=True
-            )
         elif cfg.DATASET.SUBSAMPLE_CLASSES == "custom":
-            base_labels_file = cfg.DATASET.BASE_CLASSES_FILE
-            new_labels_file = cfg.DATASET.NEW_CLASSES_FILE
-            base_labels = read_custom_split_lables_file(base_labels_file)
-            new_labels = read_custom_split_lables_file(new_labels_file)
-            print(f"base_labels: {base_labels}\nnew_labels: {new_labels}")
-            train = subsample_classes(
-                train, labels=base_labels, subsample="base", custom=True
-            )
-            test_base = subsample_classes(
-                test, labels=base_labels, subsample="base", custom=True
-            )
-            test_new = subsample_classes(
-                test, labels=new_labels, subsample="new", custom=True
-            )
-        else:
-            # MEMO: cfg.DATASET.SUBSAMPLE_CLASSES=baseにするべき
-            train = subsample_classes(
-                train, labels=labels, subsample=cfg.DATASET.SUBSAMPLE_CLASSES
-            )
-            if cfg.DATASET.SUBSAMPLE_CLASSES == "all":
-                test_base = subsample_classes(test, labels=labels, subsample="all")
-                # NOTE: データ0のもの
-                test_new = subsample_classes(test, labels=labels, subsample="all")
-            else:
-                test_base = subsample_classes(test, labels=labels, subsample="base")
-                test_new = subsample_classes(test, labels=labels, subsample="new")
-            # super().__init__(train_x=train, test_base=test, test_new=test)
-            # super().__init__(train_x=train, test_base=test_base, test_new=test_new)
-            # NOTE: データセット変更に伴い、以下のように変更
-        super().__init__(train_x=train, val=test_base, test=test_new)
+            id_labels_file = cfg.DATASET.ID_CLASSES_FILE
+            ood_labels_file = cfg.DATASET.OOD_CLASSES_FILE
+            id_labels = read_custom_split_lables_file(id_labels_file)
+            ood_labels = read_custom_split_lables_file(ood_labels_file)
+        print(f"id_labels: {id_labels}\nood_labels: {ood_labels}")
+        train = subsample_classes(train, selected_labels=id_labels)
+        test_id = subsample_classes(test, selected_labels=id_labels)
+        test_ood = subsample_classes(test, selected_labels=ood_labels)
+        super().__init__(train_x=train, val=test_id, test=test_ood)
 
     @staticmethod
     def read_classnames(text_file):

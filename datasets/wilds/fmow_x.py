@@ -74,7 +74,7 @@ CATEGORIES = [
 
 
 @DATASET_REGISTRY.register()
-class FMoWHard(WILDSBaseCustom):
+class FMoWX(WILDSBaseCustom):
     """Satellite imagery classification.
 
     62 classes (building or land use categories).
@@ -90,33 +90,17 @@ class FMoWHard(WILDSBaseCustom):
         train, val, test = super().__init__(cfg)
         labels_all = self.load_classnames()
         labels_list = list(labels_all.keys())
-        train_subsample = cfg.DATASET.SUBSAMPLE_CLASSES
-        if train_subsample == "random":
-            train_subsample = "base"
+        id_labels: list[int] = None
+        ood_labels: list[int] = None
+
         if cfg.DATASET.SUBSAMPLE_CLASSES == "random":
-            selected_id, selected_ood = self.make_random_label_split(labels_list)
-            print(f"selected_id: {selected_id}\nselected_ood: {selected_ood}")
-            train = subsample_classes(
-                train,
-                labels=selected_id,
-                subsample=train_subsample,
-                custom=True,
-            )
-            test_base = subsample_classes(
-                test, labels=selected_id, subsample="base", custom=True
-            )
-            test_new = subsample_classes(
-                test, labels=selected_ood, subsample="new", custom=True
-            )
-        else:
-            train = subsample_classes(
-                train,
-                labels=labels_list,
-                subsample=cfg.DATASET.SUBSAMPLE_CLASSES,
-            )
-            test_base = subsample_classes(test, labels=labels_list, subsample="base")
-            test_new = subsample_classes(test, labels=labels_list, subsample="new")
-        super().super_re_init(train_x=train, val=test_base, test=test_new)
+            id_labels, ood_labels = self.make_random_label_split(labels_list)
+
+        print(f"id_labels: {id_labels}\nood_labels: {ood_labels}")
+        train = subsample_classes(train, selected_labels=id_labels)
+        test_id = subsample_classes(test, selected_labels=id_labels)
+        test_ood = subsample_classes(test, selected_labels=ood_labels)
+        super().super_re_init(train_x=train, val=test_id, test=test_ood)
 
     def get_image_path(self, dataset, idx):
         idx = dataset.full_idxs[idx]
@@ -144,17 +128,19 @@ class FMoWHard(WILDSBaseCustom):
         return df
 
     def make_random_label_split(self, labels: list[int]):
-        preprocessed_classes = osp.join(self.split_fewshot_dir, "split_classes.pkl")
+        preprocessed_classes = osp.join(
+            self.split_fewshot_dir, "split_random_classes.pkl"
+        )
         if osp.exists(preprocessed_classes):
             with open(preprocessed_classes, "rb") as f:
                 data = pickle.load(f)
                 selected_id, selected_ood = (
-                    data["base"],
-                    data["new"],
+                    data["id"],
+                    data["ood"],
                 )
         else:
             selected_id, selected_ood = make_ramdom_subsample_classes(labels=labels)
-            data = {"base": selected_id, "new": selected_ood}
+            data = {"id": selected_id, "ood": selected_ood}
             with open(preprocessed_classes, "wb") as f:
                 pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
         return selected_id, selected_ood

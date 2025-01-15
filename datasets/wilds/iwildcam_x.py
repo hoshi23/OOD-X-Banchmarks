@@ -11,7 +11,7 @@ exclude_labels = ["empty"]
 
 
 @DATASET_REGISTRY.register()
-class IWildCamHard(WILDSBaseCustom):
+class IWildCamX(WILDSBaseCustom):
     """Animal species recognition.
 
     182 classes (species).
@@ -27,33 +27,21 @@ class IWildCamHard(WILDSBaseCustom):
         train, val, test = super().__init__(cfg)
         self.label_to_name_only_exist = self.load_classnames_only_exist()
         labels_all = []
-        labels_ood = []
+        labels_exclude = []
         for k, v in self.label_to_name_only_exist.items():
             if v in exclude_labels:
-                labels_ood.append(k)
+                labels_exclude.append(k)
             else:
                 labels_all.append(k)
         self.labels_all = labels_all
-        selected_id, selected_ood = self.split_label_custom_ood(
-            cfg, labels_all, labels_ood
+        id_labels, ood_labels = self.split_label_custom_ood(
+            cfg, labels_all, labels_exclude
         )
-        print(f"selected_id: {selected_id}\nselected_ood: {selected_ood}")
-        train_subsample = cfg.DATASET.SUBSAMPLE_CLASSES
-        if train_subsample == "random":
-            train_subsample = "base"
-        train = subsample_classes(
-            train,
-            labels=selected_id,
-            subsample=train_subsample,
-            custom=True,
-        )
-        test_base = subsample_classes(
-            test, labels=selected_id, subsample="base", custom=True
-        )
-        test_new = subsample_classes(
-            test, labels=selected_ood, subsample="new", custom=True
-        )
-        super().super_re_init(train_x=train, val=test_base, test=test_new)
+        print(f"id_labels: {id_labels}\nood_labels: {ood_labels}")
+        train = subsample_classes(train, selected_labels=id_labels)
+        test_id = subsample_classes(test, selected_labels=id_labels)
+        test_ood = subsample_classes(test, selected_labels=ood_labels)
+        super().super_re_init(train_x=train, val=test_id, test=test_ood)
 
     def get_image_path(self, dataset, idx):
         image_name = dataset._input_array[idx]
@@ -70,31 +58,25 @@ class IWildCamHard(WILDSBaseCustom):
         return dict(filterd_df["name"])
 
     def split_label_custom_ood(
-        self, cfg, labels: list[int], ood_labels: list[int]
+        self, cfg, labels: list[int], labels_exclude: list[int]
     ) -> tuple[list[int], list[int]]:
-        selected_id = []
-        selected_ood = []
-        n = len(labels)
-        m = math.ceil(n / 2)
-        if cfg.DATASET.SUBSAMPLE_CLASSES == "base":
-            selected_id = labels[:m]  # take the first half
-            selected_ood = labels[m:]  # take the second half
+        selected_id: list[int] = None
+        selected_ood: list[int] = None
         if cfg.DATASET.SUBSAMPLE_CLASSES == "random":
-            preprocessed_classes = osp.join(self.split_fewshot_dir, "split_classes.pkl")
+            preprocessed_classes = osp.join(
+                self.split_fewshot_dir, "split_random_classes.pkl"
+            )
             if osp.exists(preprocessed_classes):
                 with open(preprocessed_classes, "rb") as f:
                     data = pickle.load(f)
                     selected_id, selected_ood = (
-                        data["base"],
-                        data["new"],
+                        data["id"],
+                        data["ood"],
                     )
             else:
                 selected_id, selected_ood = make_ramdom_subsample_classes(labels=labels)
-                data = {"base": selected_id, "new": selected_ood}
+                data = {"id": selected_id, "ood": selected_ood}
                 with open(preprocessed_classes, "wb") as f:
                     pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
-        else:
-            selected_id = labels[m:]
-            selected_ood = labels[:m]
-        selected_ood.extend(ood_labels)
+        selected_ood.extend(labels_exclude)
         return selected_id, selected_ood

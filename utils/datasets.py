@@ -2,42 +2,29 @@ from dassl.data.datasets import Datum
 import math
 
 
-def subsample_classes(*args, labels, subsample: str = "all", custom=False):
+def subsample_classes(*args, selected_labels: list = None):
     """Divide classes into two groups. The first group
     represents base classes while the second group represents
     new classes.
 
     Args:
         args: a list of datasets, e.g. train, val and test.
-        subsample (str): what classes to subsample.
+        selected_labels (list): what classes to subsample. If None, return all classes.
     """
-    assert subsample in ["all", "base", "new"]
 
-    if subsample == "all":
+    if selected_labels is None:
         if len(args) == 1:
             args = args[0]
         return args
 
-    n = len(labels)
-    # Divide classes into two halves
-    m = math.ceil(n / 2)
-
-    print(f"SUBSAMPLE {subsample.upper()} CLASSES!")
-    if custom:
-        selected = labels
-    elif subsample == "base":
-        selected = labels[:m]  # take the first half
-    else:
-        selected = labels[m:]  # take the second half
-    relabeler = {y: y_new for y_new, y in enumerate(selected)}
+    relabeler = {y: y_new for y_new, y in enumerate(selected_labels)}
 
     output = []
     for dataset in args:
         dataset_new = []
         for item in dataset:
-            if item.label not in selected:
+            if item.label not in selected_labels:
                 continue
-            # print(f"item.impth: {item.impath}, label: {item.label}")
             item_new = Datum(
                 impath=item.impath.replace("davidjung", "david"),
                 label=relabeler[item.label],
@@ -89,7 +76,6 @@ def read_custom_split_lables_file(filepath: str) -> list[int]:
 def get_harddata_original_name(dataset_name: str) -> str:
     import re
 
-    # 正規表現パターンを定義
     pattern = r"(\w+)Hard"
 
     match = re.match(pattern, dataset_name)

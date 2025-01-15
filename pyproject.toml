@@ -9,6 +9,7 @@ packages = [
     { include = "trainers"},
     { include = "datasets"},
     { include = "utils"},
+    { include = "clip"},
     { include = "dassl", from = "third_party/Dassl.pytorch" },
 ]
 
