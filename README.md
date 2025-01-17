@@ -132,7 +132,6 @@ bash imagenet.sh
 ### Wilds-FS-X (iWildCam)
 #### About
 
-![imagenet_x_benchmark](figures/iwildcam_fs_x_benchmark.jpeg)
 
 Wilds-FS-X is a benchmark that brings the problem setting of ImageNet-FS-X closer to real-world scenarios by utilizing [Wilds](https://wilds.stanford.edu/datasets/).
 iWildCam is a dataset of wildlife photos taken by camera traps.
