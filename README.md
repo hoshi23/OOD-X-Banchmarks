@@ -76,11 +76,48 @@ python download_variance.py
 
 #### Wilds
 
-Download iWilCam and FMoW by using official library.
+Download iWilCam and FMoW.
 
 ```
 cd data_managment/wilds
 python download.py
 ```
 
+
+### Training and evaluation scripts
+
+We provide training and evaluation scripts in `scripts` folder.
+After navigating to the directory containing the relevant script file, execute the script.
+
+
+#### ImageNet-X or ImageNet-FS-X
+
+If you want to evaluate on ImageNet-X, replace the `--eval_full_supectrum_ood` option with `--eval_ood`.
+
+```
+bash imagenet.sh
+```
+
+
+#### Wilds-FS-X (iWildCam)
+
+```
+bash iwildcam.sh
+```
+
+#### Wilds-FS-X (FMoW)
+
+```
+bash fmow.sh
+```
+
+
+## Supported Methods
+
+This part lists all the methods we include in this codebase.
+
+- [MCM](https://arxiv.org/abs/2211.13445)
+- [GL-MCM](https://arxiv.org/abs/2304.04521)
+- [CoOp](https://arxiv.org/abs/2109.01134)
+- [LoCoOp](https://arxiv.org/abs/2306.01293)
 
