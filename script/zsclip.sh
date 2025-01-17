@@ -1,4 +1,4 @@
-DIR_BASE="../.."
+DIR_BASE=".."
 
 
 # config
@@ -27,7 +27,7 @@ echo "SEED: $SEED"
 echo "Dataset: $DATASET"
 
 
-python ${DIR_BASE}/src_ver2/train.py \
+python ${DIR_BASE}/src/train.py \
 --root ${DATA} \
 --seed ${SEED} \
 --trainer ${TRAINER} \
@@ -40,5 +40,5 @@ python ${DIR_BASE}/src_ver2/train.py \
 DATASET.NUM_SHOTS ${SHOTS} \
 DATASET.PROMPT MCM \
 DATASET.SUBSAMPLE_CLASSES ${SUBSAMPLE_CLASSES} \
-DATASET.ID_CLASSES_FILE "${DIR_BASE}/data/class_splits/imagenet/x/first_datasets.txt" \
-DATASET.OOD_CLASSES_FILE "${DIR_BASE}/data/class_splits/imagenet/x/second_datasets.txt"
+DATASET.ID_CLASSES_FILE "${DATA}/class_splits/imagenet/x/first_datasets.txt" \
+DATASET.OOD_CLASSES_FILE "${DATA}/class_splits/imagenet/x/second_datasets.txt"

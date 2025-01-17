@@ -5,7 +5,7 @@ from dassl.engine import TRAINER_REGISTRY
 from clip import clip
 
 
-from trainer_base.ood_trainier_base import OodTrainerX
+from .trainer_base.ood_trainier_base import OodTrainerX
 from .modules.zsclip import (
     load_clip_to_cpu as load_zsclip_to_cpu,
     load_clip_w_local_to_cpu,

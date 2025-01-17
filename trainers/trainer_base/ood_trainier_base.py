@@ -7,7 +7,7 @@ from tqdm import tqdm
 from collections import OrderedDict
 
 from utils.evaluation import get_measures
-from utils.plot_util import (
+from utils.plot import (
     plot_distributio_ood,
 )
 
@@ -200,7 +200,7 @@ class OodTrainerX(TrainerX):
                 additional_dm = self.build_additional_data_loader(dataset)
                 dataloader = additional_dm.val_loader
             in_scores, classification_result = self.test_ood_score(
-                dataloader, is_classification_eval=True, is_self_loader=True
+                dataloader, is_classification_eval=True
             )
             self.report_classification_results(classification_result, f"{dataset}-val")
             for ood_method in self.cfg.ood_method:
@@ -217,7 +217,7 @@ class OodTrainerX(TrainerX):
                 additional_dm = self.build_additional_data_loader(dataset)
                 dataloader = additional_dm.test_loader
             out_scores, _ = self.test_ood_score(
-                dataloader, is_classification_eval=False, is_self_loader=True
+                dataloader, is_classification_eval=False
             )
             for ood_method in self.cfg.ood_method:
                 ood_scores_all[ood_method] = np.concatenate(

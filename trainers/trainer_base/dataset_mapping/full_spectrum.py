@@ -1,53 +1,53 @@
 FULL_SPECTRUM_MAPPING: dict[str, dict] = {
-    "ImageNetHard": {
+    "ImageNetX": {
         "id": {
-            "s": ["ImageNetHard"],
+            "s": ["ImageNetX"],
             "fs": [
-                "ImageNetHard",
-                "ImageNetV2Hard",
-                "ImageNetRHard",
-                "ImageNetCHard",
+                "ImageNetX",
+                "ImageNetV2X",
+                "ImageNetRX",
+                "ImageNetCX",
             ],
         },
         "ood": {
-            "s": ["ImageNetHard"],
+            "s": ["ImageNetX"],
             "fs": [
-                "ImageNetHard",
-                "ImageNetV2Hard",
-                "ImageNetRHard",
-                "ImageNetCHard",
+                "ImageNetX",
+                "ImageNetV2X",
+                "ImageNetRX",
+                "ImageNetCX",
             ],
         },
     },
-    "IWildCamHard": {
+    "IWildCamX": {
         "id": {
-            "s": ["IWildCamIdTestHard"],
+            "s": ["IWildCamIdTestX"],
             "fs": [
-                "IWildCamIdTestHard",
-                "IWildCamHard",
+                "IWildCamIdTestX",
+                "IWildCamX",
             ],
         },
         "ood": {
-            "s": ["IWildCamIdTestHard"],
+            "s": ["IWildCamIdTestX"],
             "fs": [
-                "IWildCamIdTestHard",
-                "IWildCamHard",
+                "IWildCamIdTestX",
+                "IWildCamX",
             ],
         },
     },
-    "FMoWHard": {
+    "FMoWX": {
         "id": {
-            "s": ["FMoWIdTestHard"],
+            "s": ["FMoWIdTestX"],
             "fs": [
-                "FMoWIdTestHard",
-                "FMoWHard",
+                "FMoWIdTestX",
+                "FMoWX",
             ],
         },
         "ood": {
-            "s": ["FMoWIdTestHard"],
+            "s": ["FMoWIdTestX"],
             "fs": [
-                "FMoWIdTestHard",
-                "FMoWHard",
+                "FMoWIdTestX",
+                "FMoWX",
             ],
         },
     },
