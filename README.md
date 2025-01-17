@@ -102,6 +102,7 @@ After navigating to the directory containing the relevant script file, execute t
 ImageNet-X is a benchmark that splits the ImageNet-1k.
 This benchmark enables a precise evaluation of sensitivity to semantic shifts by separating semantically similar labels into ID and OOD categories.
 Based on the WordNet hierarchy, closely related labels were separated into ID and OOD.
+(Refer to `data_managment/imagenet/make_split_list.py` for the split method.)
 
 
 #### Run scripts
