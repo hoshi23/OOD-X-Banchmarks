@@ -83,28 +83,78 @@ python download.py
 ```
 
 
-### Training and evaluation scripts
+### Training and evaluation
 
 We provide training and evaluation scripts in `scripts` folder.
 After navigating to the directory containing the relevant script file, execute the script.
 
 
-#### ImageNet-X or ImageNet-FS-X
+## Supported Benchmarks
 
-If you want to evaluate on ImageNet-X, replace the `--eval_full_supectrum_ood` option with `--eval_ood`.
+
+### ImageNet-X
+
+
+#### About
+
+![imagenet_x_benchmark](figures/imagenet_x_benchmark.png)
+
+ImageNet-X is a benchmark that splits the ImageNet-1k.
+This benchmark enables a precise evaluation of sensitivity to semantic shifts by separating semantically similar labels into ID and OOD categories.
+Based on the WordNet hierarchy, closely related labels were separated into ID and OOD.
+
+
+#### Run scripts
+
+Replace the `--eval_full_supectrum_ood` option with `--eval_ood`.
 
 ```
 bash imagenet.sh
 ```
 
 
-#### Wilds-FS-X (iWildCam)
+### ImageNet-FS-X
+#### About
+
+![imagenet_x_benchmark](figures/imagenet_fs_x_benchmark.png)
+
+ImageNet-FS-X incorporates covariate shift into ImageNet-X.
+Derived datasets from ImageNet-1k are used as data with different covariate distributions. 
+
+
+#### Run scripts
+
+
+```
+bash imagenet.sh
+```
+
+### Wilds-FS-X (iWildCam)
+#### About
+
+![imagenet_x_benchmark](figures/iwildcam_fs_x_benchmark.png)
+
+Wilds-FS-X is a benchmark that brings the problem setting of ImageNet-FS-X closer to real-world scenarios by utilizing [Wilds](https://wilds.stanford.edu/datasets/).
+iWildCam is a dataset of wildlife photos taken by camera traps.
+Semantic shift corresponds to different animal species, and covariate shift corresponds to changes in camera locations of camera photos.
+
+#### Run scripts
+
 
 ```
 bash iwildcam.sh
 ```
 
-#### Wilds-FS-X (FMoW)
+### Wilds-FS-X (FMoW)
+#### About
+
+![imagenet_x_benchmark](figures/fmow_fs_x_benchmark.png)
+
+FMoW is a RGB satellite image dataset. 
+Semantic shift corresponds to the building or land use categories, and covariate shift corresponds to changes in the year when the images were captured.
+
+#### Run scripts
+
 
 ```
 bash fmow.sh
