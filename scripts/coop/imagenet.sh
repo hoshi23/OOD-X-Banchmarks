@@ -19,7 +19,7 @@ CUSTOM_SPLIT_MODE="x"
 # output
 ADDITIONAL_SETTING="${SUBSAMPLE_CLASSES}_${CUSTOM_SPLIT_MODE}"
 
-for SEED in 1 #2 3
+for SEED in 1 2 3
     do
     train_output_dir="${OUTPUT_BASE}/${TRAINER}/shots_${SHOTS}/${CONFIG_NAME}/${TRAIN_MODE}/${DATASET}/${ADDITIONAL_SETTING}/train/seed${SEED}"
     eval_output_dir="${OUTPUT_BASE}/${TRAINER}/shots_${SHOTS}/${CONFIG_NAME}/${TRAIN_MODE}/${DATASET}/${ADDITIONAL_SETTING}/eval/seed${SEED}"
