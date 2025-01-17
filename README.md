@@ -97,7 +97,7 @@ After navigating to the directory containing the relevant script file, execute t
 
 #### About
 
-![imagenet_x_benchmark](figures/imagenet_x_benchmark.png)
+![imagenet_x_benchmark](figures/imagenet_x_benchmark.jpeg)
 
 ImageNet-X is a benchmark that splits the ImageNet-1k.
 This benchmark enables a precise evaluation of sensitivity to semantic shifts by separating semantically similar labels into ID and OOD categories.
@@ -116,7 +116,7 @@ bash imagenet.sh
 ### ImageNet-FS-X
 #### About
 
-![imagenet_x_benchmark](figures/imagenet_fs_x_benchmark.png)
+![imagenet_x_benchmark](figures/imagenet_fs_x_benchmark.jpeg)
 
 ImageNet-FS-X incorporates covariate shift into ImageNet-X.
 Derived datasets from ImageNet-1k are used as data with different covariate distributions. 
@@ -132,7 +132,7 @@ bash imagenet.sh
 ### Wilds-FS-X (iWildCam)
 #### About
 
-![imagenet_x_benchmark](figures/iwildcam_fs_x_benchmark.png)
+![imagenet_x_benchmark](figures/iwildcam_fs_x_benchmark.jpeg)
 
 Wilds-FS-X is a benchmark that brings the problem setting of ImageNet-FS-X closer to real-world scenarios by utilizing [Wilds](https://wilds.stanford.edu/datasets/).
 iWildCam is a dataset of wildlife photos taken by camera traps.
@@ -148,7 +148,7 @@ bash iwildcam.sh
 ### Wilds-FS-X (FMoW)
 #### About
 
-![imagenet_x_benchmark](figures/fmow_fs_x_benchmark.png)
+![imagenet_x_benchmark](figures/fmow_fs_x_benchmark.jpeg)
 
 FMoW is a RGB satellite image dataset. 
 Semantic shift corresponds to the building or land use categories, and covariate shift corresponds to changes in the year when the images were captured.
