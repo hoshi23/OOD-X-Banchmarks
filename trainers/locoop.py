@@ -46,7 +46,7 @@ class LoCoOp(OodTrainerX):
         cfg = self.cfg
         classnames = self.dm.dataset.classnames
 
-        self.lambda_value = cfg.lambda_value
+        self.lambda_value = cfg.TRAINER.LOCOOP.lambda_value
         # self.top_k = cfg.topk
         self.top_k = self.num_classes // 5  # cfg.topk###
 

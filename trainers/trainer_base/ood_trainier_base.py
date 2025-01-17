@@ -6,7 +6,7 @@ from torch.nn import functional as F
 from tqdm import tqdm
 from collections import OrderedDict
 
-from evaluation.utils.calc_measures import get_measures
+from utils.evaluation import get_measures
 from utils.plot_util import (
     plot_distributio_ood,
 )
@@ -233,13 +233,6 @@ class OodTrainerX(TrainerX):
                         tag = f"id-{id_dataset}/ood-{dataset}/{ood_method}/{measure}"
                         print(f"{tag}: {value}")
                         self.write_scalar(tag, value)
-                    # plot_distributio_ood(
-                    #     self.cfg,
-                    #     id_scores_each_dataset[id_dataset][ood_method],
-                    #     out_scores[ood_method],
-                    #     f"id-{id_dataset}-ood-{dataset}",
-                    #     ood_method,
-                    # )
                 ood_scores_each_dataset[dataset] = out_scores
 
         # report of all patterns

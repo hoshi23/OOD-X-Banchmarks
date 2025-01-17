@@ -17,7 +17,7 @@ class IWildCamIdTestX(IWildCamX):
         - Koh et al. "Wilds: A benchmark of in-the-wild distribution shifts." ICML 2021.
     """
 
-    dataset_dir = "iwildcam_v2.0"
+    dataset_dir = "iwildcam/iwildcam_v2.0"
 
     def __init__(self, cfg):
         train, val, test = super(IWildCamX, self).__init__(cfg)

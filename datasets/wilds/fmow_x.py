@@ -84,7 +84,7 @@ class FMoWX(WILDSBaseCustom):
         - Koh et al. "Wilds: A benchmark of in-the-wild distribution shifts." ICML 2021.
     """
 
-    dataset_dir = "fmow_v1.1"
+    dataset_dir = "fmow/fmow_v1.1"
 
     def __init__(self, cfg):
         train, val, test = super().__init__(cfg)
