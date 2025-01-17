@@ -1,6 +1,6 @@
 # OOD-X-Banchmarks
 
-![ood_x_benchmark](figures/ood_x_benchmark.jpg)
+![ood_x_benchmark](figures/ood_x_benchmark.png)
 
 ## Get Started
 
