@@ -36,8 +36,6 @@ class CoOp(OodTrainerX):
         cfg = self.cfg
         classnames = self.dm.dataset.classnames
 
-        self.lambda_value = cfg.lambda_value
-
         print(f"Loading CLIP (backbone: {cfg.MODEL.BACKBONE.NAME})")
         clip_model = load_clip_w_local_to_cpu(cfg)
 
