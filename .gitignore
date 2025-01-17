@@ -7,5 +7,5 @@ poetry.lock
 third_party/*
 output/*
 data/*
-!data/class_split
+!data/class_splits
 output/*
