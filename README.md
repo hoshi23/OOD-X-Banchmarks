@@ -15,7 +15,6 @@ mkdir third_party && cd third_party
 git clone git@github.com:KaiyangZhou/Dassl.pytorch.git
 
 # installation via poetry
-poetry config virtualenvs.in-project true
 poetry lock
 poetry install
 poetry shell
