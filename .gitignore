@@ -4,6 +4,7 @@ __pycache__/
 third_party/*
 output/*
 data/*
+!data/class_split
 
 .env
 poetry.lock
