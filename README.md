@@ -168,3 +168,7 @@ This part lists all the methods we include in this codebase.
 - [CoOp](https://arxiv.org/abs/2109.01134)
 - [LoCoOp](https://arxiv.org/abs/2306.01293)
 
+
+### How to add trainer
+
+If you want to add a new trainer, please refer to `trainers/trainer_templete.py` and implement the addition accordingly.
