@@ -5,26 +5,26 @@ OUTPUT_BASE="${DIR_BASE}/output"
 # config
 CONFIG_BASE="LoCoOp"
 CONFIG_NAME="vit_b16_ep50"
-TRAINER="CoOp"
+TRAINER="LoCoOp"
 SHOTS=16
 
 
 # data mode
-# ImageNet-X
-DATASET="imagenet_x"
+# Wilds-FS-X (FMoW)
+DATASET="fmow_x"
 SUBSAMPLE_CLASSES="custom"
 CUSTOM_SPLIT_MODE="x"
 
 
 # output
-ADDITIONAL_SETTING="${SUBSAMPLE_CLASSES}_${CUSTOM_SPLIT_MODE}"
+ADDITIONAL_SETTING="${SUBSAMPLE_CLASSES}"
 
 for SEED in 1 2 3
     do
     train_output_dir="${OUTPUT_BASE}/${TRAINER}/shots_${SHOTS}/${CONFIG_NAME}/${TRAIN_MODE}/${DATASET}/${ADDITIONAL_SETTING}/train/seed${SEED}"
     eval_output_dir="${OUTPUT_BASE}/${TRAINER}/shots_${SHOTS}/${CONFIG_NAME}/${TRAIN_MODE}/${DATASET}/${ADDITIONAL_SETTING}/eval/seed${SEED}"
 
-    echo "Train: ImageNet-X"
+    echo "Train: Wilds-FS-X (FMoW)"
     python ${DIR_BASE}/src/train.py \
     --root ${DATA} \
     --seed ${SEED} \
@@ -35,11 +35,11 @@ for SEED in 1 2 3
     --output-dir ${train_output_dir} \
     DATASET.NUM_SHOTS ${SHOTS} \
     DATASET.SUBSAMPLE_CLASSES ${SUBSAMPLE_CLASSES} \
-    DATASET.ID_CLASSES_FILE "${DATA}/class_splits/imagenet/${CUSTOM_SPLIT_MODE}/first_datasets.txt" \
-    DATASET.OOD_CLASSES_FILE "${DATA}/class_splits/imagenet/${CUSTOM_SPLIT_MODE}/second_datasets.txt"
+    DATASET.ID_CLASSES_FILE "${DATA}/class_splits/fmow/${CUSTOM_SPLIT_MODE}/id_data.txt" \
+    DATASET.OOD_CLASSES_FILE "${DATA}/class_splits/fmow/${CUSTOM_SPLIT_MODE}/ood_data.txt"
 
 
-    echo "Benchmark: ImageNet-X"
+    echo "Benchmark: Wilds-FS-X (FMoW)"
     python ${DIR_BASE}/src/train.py \
     --root ${DATA} \
     --seed ${SEED} \
@@ -54,7 +54,7 @@ for SEED in 1 2 3
     --eval_full_supectrum_ood \
     DATASET.NUM_SHOTS ${SHOTS} \
     DATASET.SUBSAMPLE_CLASSES ${SUBSAMPLE_CLASSES} \
-    DATASET.ID_CLASSES_FILE "${DATA}/class_splits/imagenet/${CUSTOM_SPLIT_MODE}/first_datasets.txt" \
-    DATASET.OOD_CLASSES_FILE "${DATA}/class_splits/imagenet/${CUSTOM_SPLIT_MODE}/second_datasets.txt"
+    DATASET.ID_CLASSES_FILE "${DATA}/class_splits/fmow/${CUSTOM_SPLIT_MODE}/id_data.txt" \
+    DATASET.OOD_CLASSES_FILE "${DATA}/class_splits/fmow/${CUSTOM_SPLIT_MODE}/ood_data.txt"
 
 done

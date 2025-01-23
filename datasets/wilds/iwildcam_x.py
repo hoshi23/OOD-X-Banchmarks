@@ -5,7 +5,11 @@ import pickle
 
 from dassl.data.datasets import DATASET_REGISTRY
 from .wilds_base_custom import WILDSBaseCustom
-from utils.datasets import subsample_classes, make_ramdom_subsample_classes
+from utils.datasets import (
+    subsample_classes,
+    make_ramdom_subsample_classes,
+    read_custom_split_lables_file,
+)
 
 exclude_labels = ["empty"]
 
@@ -34,9 +38,10 @@ class IWildCamX(WILDSBaseCustom):
             else:
                 labels_all.append(k)
         self.labels_all = labels_all
-        id_labels, ood_labels = self.split_label_custom_ood(
-            cfg, labels_all, labels_exclude
-        )
+        if cfg.DATASET.SUBSAMPLE_CLASSES == "random":
+            id_labels, ood_labels = self.get_random_split(labels_all, labels_exclude)
+        elif cfg.DATASET.SUBSAMPLE_CLASSES == "custom":
+            id_labels, ood_labels = self.get_custom_split(cfg)
         print(f"id_labels: {id_labels}\nood_labels: {ood_labels}")
         train = subsample_classes(train, selected_labels=id_labels)
         test_id = subsample_classes(test, selected_labels=id_labels)
@@ -57,26 +62,35 @@ class IWildCamX(WILDSBaseCustom):
         filterd_df = df[df["y"] != 99999]
         return dict(filterd_df["name"])
 
-    def split_label_custom_ood(
-        self, cfg, labels: list[int], labels_exclude: list[int]
+    def get_random_split(
+        self, labels: list[int], labels_exclude: list[int]
     ) -> tuple[list[int], list[int]]:
         selected_id: list[int] = None
         selected_ood: list[int] = None
-        if cfg.DATASET.SUBSAMPLE_CLASSES == "random":
-            preprocessed_classes = osp.join(
-                self.split_fewshot_dir, "split_random_classes.pkl"
-            )
-            if osp.exists(preprocessed_classes):
-                with open(preprocessed_classes, "rb") as f:
-                    data = pickle.load(f)
-                    selected_id, selected_ood = (
-                        data["id"],
-                        data["ood"],
-                    )
-            else:
-                selected_id, selected_ood = make_ramdom_subsample_classes(labels=labels)
-                data = {"id": selected_id, "ood": selected_ood}
-                with open(preprocessed_classes, "wb") as f:
-                    pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+        preprocessed_classes = osp.join(
+            self.split_fewshot_dir, "split_random_classes.pkl"
+        )
+        if osp.exists(preprocessed_classes):
+            with open(preprocessed_classes, "rb") as f:
+                data = pickle.load(f)
+                selected_id, selected_ood = (
+                    data["id"],
+                    data["ood"],
+                )
+        else:
+            selected_id, selected_ood = make_ramdom_subsample_classes(labels=labels)
+            data = {"id": selected_id, "ood": selected_ood}
+            with open(preprocessed_classes, "wb") as f:
+                pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
         selected_ood.extend(labels_exclude)
+        return selected_id, selected_ood
+
+    def get_custom_split(
+        self,
+        cfg,
+    ) -> tuple[list[int], list[int]]:
+        id_labels_file = cfg.DATASET.ID_CLASSES_FILE
+        ood_labels_file = cfg.DATASET.OOD_CLASSES_FILE
+        selected_id = read_custom_split_lables_file(id_labels_file)
+        selected_ood = read_custom_split_lables_file(ood_labels_file)
         return selected_id, selected_ood

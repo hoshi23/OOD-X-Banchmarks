@@ -107,10 +107,9 @@ Based on the WordNet hierarchy, closely related labels were separated into ID an
 
 #### Run scripts
 
-Replace the `--eval_full_supectrum_ood` option with `--eval_ood`.
 
 ```
-bash imagenet.sh
+bash imagenet_x.sh
 ```
 
 
@@ -124,9 +123,10 @@ Derived datasets from ImageNet-1k are used as data with different covariate dist
 
 #### Run scripts
 
+Since the training process is shared between ImageNet-X and ImageNet-FS-X, the pre-trained model from one can be used, allowing you to skip the training phase.
 
 ```
-bash imagenet.sh
+bash imagenet_fs_x.sh
 ```
 
 ### Wilds-FS-X (iWildCam)
@@ -141,7 +141,7 @@ Semantic shift corresponds to different animal species, and covariate shift corr
 
 
 ```
-bash iwildcam.sh
+bash iwildcam_fs_x.sh
 ```
 
 ### Wilds-FS-X (FMoW)
@@ -155,7 +155,7 @@ Semantic shift corresponds to the building or land use categories, and covariate
 
 
 ```
-bash fmow.sh
+bash fmow_fs_x.sh
 ```
 
 

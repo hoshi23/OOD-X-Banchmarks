@@ -34,9 +34,12 @@ class IWildCamIdTestX(IWildCamX):
             else:
                 labels_all.append(k)
         self.labels_all = labels_all
-        id_labels, ood_labels = self.split_label_custom_ood(
-            cfg, labels_all, labels_exclude
-        )
+        if cfg.DATASET.SUBSAMPLE_CLASSES == "random":
+            id_labels, ood_labels = self.get_random_split(
+                cfg, labels_all, labels_exclude
+            )
+        elif cfg.DATASET.SUBSAMPLE_CLASSES == "custom":
+            id_labels, ood_labels = self.get_custom_split(cfg)
         print(f"id_labels: {id_labels}\nood_labels: {ood_labels}")
         train = subsample_classes(train, selected_labels=id_labels)
         test_id = subsample_classes(test, selected_labels=id_labels)

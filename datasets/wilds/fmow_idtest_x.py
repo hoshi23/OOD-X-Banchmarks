@@ -29,6 +29,8 @@ class FMoWIdTestX(FMoWX):
         ood_labels: list[int] = None
         if cfg.DATASET.SUBSAMPLE_CLASSES == "random":
             id_labels, ood_labels = self.make_random_label_split(labels_list)
+        elif cfg.DATASET.SUBSAMPLE_CLASSES == "custom":
+            id_labels, ood_labels = self.get_custom_split(cfg)
 
         print(f"id_labels: {id_labels}\nood_labels: {ood_labels}")
         train = subsample_classes(train, selected_labels=id_labels)

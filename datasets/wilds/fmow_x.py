@@ -5,7 +5,11 @@ import pickle
 from dassl.data.datasets import DATASET_REGISTRY
 
 from .wilds_base_custom import WILDSBaseCustom
-from utils.datasets import subsample_classes, make_ramdom_subsample_classes
+from utils.datasets import (
+    subsample_classes,
+    make_ramdom_subsample_classes,
+    read_custom_split_lables_file,
+)
 
 CATEGORIES = [
     "airport",
@@ -95,6 +99,8 @@ class FMoWX(WILDSBaseCustom):
 
         if cfg.DATASET.SUBSAMPLE_CLASSES == "random":
             id_labels, ood_labels = self.make_random_label_split(labels_list)
+        elif cfg.DATASET.SUBSAMPLE_CLASSES == "custom":
+            id_labels, ood_labels = self.get_custom_split(cfg)
 
         print(f"id_labels: {id_labels}\nood_labels: {ood_labels}")
         train = subsample_classes(train, selected_labels=id_labels)
@@ -127,7 +133,7 @@ class FMoWX(WILDSBaseCustom):
         )
         return df
 
-    def make_random_label_split(self, labels: list[int]):
+    def get_random_split(self, labels: list[int]):
         preprocessed_classes = osp.join(
             self.split_fewshot_dir, "split_random_classes.pkl"
         )
@@ -143,4 +149,14 @@ class FMoWX(WILDSBaseCustom):
             data = {"id": selected_id, "ood": selected_ood}
             with open(preprocessed_classes, "wb") as f:
                 pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+        return selected_id, selected_ood
+
+    def get_custom_split(
+        self,
+        cfg,
+    ) -> tuple[list[int], list[int]]:
+        id_labels_file = cfg.DATASET.ID_CLASSES_FILE
+        ood_labels_file = cfg.DATASET.OOD_CLASSES_FILE
+        selected_id = read_custom_split_lables_file(id_labels_file)
+        selected_ood = read_custom_split_lables_file(ood_labels_file)
         return selected_id, selected_ood

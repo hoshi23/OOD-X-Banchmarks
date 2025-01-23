@@ -12,7 +12,8 @@ SHOTS=16
 # data mode
 # Wilds-FS-X (iWildCam)
 DATASET="iwildcam_x"
-SUBSAMPLE_CLASSES="random"
+SUBSAMPLE_CLASSES="custom"
+CUSTOM_SPLIT_MODE="x"
 
 
 # output
@@ -33,7 +34,10 @@ for SEED in 1 2 3
     --ood_method mcm \
     --output-dir ${train_output_dir} \
     DATASET.NUM_SHOTS ${SHOTS} \
-    DATASET.SUBSAMPLE_CLASSES ${SUBSAMPLE_CLASSES} 
+    DATASET.SUBSAMPLE_CLASSES ${SUBSAMPLE_CLASSES} \
+    DATASET.ID_CLASSES_FILE "${DATA}/class_splits/iwildcam/${CUSTOM_SPLIT_MODE}/id_data.txt" \
+    DATASET.OOD_CLASSES_FILE "${DATA}/class_splits/iwildcam/${CUSTOM_SPLIT_MODE}/ood_data.txt"
+
 
 
     echo "Benchmark: Wilds-FS-X (iWildCam)"
@@ -50,6 +54,9 @@ for SEED in 1 2 3
     --eval-only \
     --eval_full_supectrum_ood \
     DATASET.NUM_SHOTS ${SHOTS} \
-    DATASET.SUBSAMPLE_CLASSES ${SUBSAMPLE_CLASSES} 
+    DATASET.SUBSAMPLE_CLASSES ${SUBSAMPLE_CLASSES} \
+    DATASET.ID_CLASSES_FILE "${DATA}/class_splits/iwildcam/${CUSTOM_SPLIT_MODE}/id_data.txt" \
+    DATASET.OOD_CLASSES_FILE "${DATA}/class_splits/iwildcam/${CUSTOM_SPLIT_MODE}/ood_data.txt"
+
 
 done

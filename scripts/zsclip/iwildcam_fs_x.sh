@@ -11,20 +11,21 @@ SEED=1
 TRAIN_MODE="MCM"
 
 # data mode
-DATASET="imagenet_x"
+DATASET="iwildcam_x"
 SUBSAMPLE_CLASSES="custom"
 CUSTOM_SPLIT_MODE="x"
 
 
+
 # output
-ADDITIONAL_SETTING="${SUBSAMPLE_CLASSES}_${CUSTOM_SPLIT_MODE}"
+ADDITIONAL_SETTING="${SUBSAMPLE_CLASSES}"
 eval_output_dir="${OUTPUT_BASE}/${TRAINER}/shots_${SHOTS}/${CONFIG_NAME}/${TRAIN_MODE}/${DATASET}/${ADDITIONAL_SETTING}/eval/seed${SEED}"
 
 
 
 
-# ImageNet-X
-echo "Benchmark: ImageNet-X"
+# Wilds-FS-X (iWildCam)
+echo "Benchmark: Wilds-FS-X (iWildCam)"
 python ${DIR_BASE}/src/train.py \
 --root ${DATA} \
 --seed ${SEED} \
@@ -38,5 +39,5 @@ python ${DIR_BASE}/src/train.py \
 DATASET.NUM_SHOTS ${SHOTS} \
 DATASET.PROMPT MCM \
 DATASET.SUBSAMPLE_CLASSES ${SUBSAMPLE_CLASSES} \
-DATASET.ID_CLASSES_FILE "${DATA}/class_splits/imagenet/${CUSTOM_SPLIT_MODE}/first_datasets.txt" \
-DATASET.OOD_CLASSES_FILE "${DATA}/class_splits/imagenet/${CUSTOM_SPLIT_MODE}/second_datasets.txt"
+DATASET.ID_CLASSES_FILE "${DATA}/class_splits/iwildcam/${CUSTOM_SPLIT_MODE}/id_data.txt" \
+DATASET.OOD_CLASSES_FILE "${DATA}/class_splits/iwildcam/${CUSTOM_SPLIT_MODE}/ood_data.txt"
