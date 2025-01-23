@@ -169,6 +169,6 @@ This part lists all the methods we include in this codebase.
 - [LoCoOp](https://arxiv.org/abs/2306.01293)
 
 
-### How to add trainer
+### How to add custom trainer
 
 If you want to add a new trainer, please refer to `trainers/trainer_templete.py` and implement the addition accordingly.
