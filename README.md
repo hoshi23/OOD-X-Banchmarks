@@ -64,9 +64,10 @@ Download metadatas and put under  `data/imagenet` folder.
 - `words.txt`: http://www.image-net.org/data/words.txt
 
 
-#### ImageNet derived datasets
+#### ImageNet variant datasets
 
 Download ImageNet-V2, ImageNet-R, ImageNet-C.
+The composition of this test set is based on [OpenOOD v1.5](https://arxiv.org/abs/2306.09301).
 
 ```
 cd data_managment/imagenet
