@@ -1,4 +1,4 @@
-# A Benchmark and Evaluation for Real-World Out-of-Distribution Detection Using Vision-Language Model
+# A Benchmark and Evaluation for Real-World Out-of-Distribution Detection Using Vision-Language Models
 |🎉 Introducing our new benchmarks for out-of-distribution (OOD) detection!  It's more challenging & closer to real-world scenarios, paving the way for real-world OOD detection 🚀|
 |-----------------------------------------|
 
@@ -204,7 +204,7 @@ If you want to add a new trainer, please refer to `trainers/trainer_templete.py`
 If you find our paper helpful for your research, please consider citing the following paper:
 ```bibtex
 @article{noda2025oodx,
-  title={A Benchmark and Evaluation for Real-World Out-of-Distribution Detection Using Vision-Language Model},
+  title={A Benchmark and Evaluation for Real-World Out-of-Distribution Detection Using Vision-Language Models},
   author={Noda, Shiho and Miyai, Atsuyuki and Yu, Qing and Irie, Go and Aizawa, Kiyoharu},
   journal={hogehgeo},
   year={2025}
