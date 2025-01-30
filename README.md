@@ -2,7 +2,25 @@
 |🎉 Introducing our new benchmarks for out-of-distribution (OOD) detection!  It's more challenging & closer to real-world scenarios, paving the way for real-world OOD detection 🚀|
 |-----------------------------------------|
 
+<div align="center">
+    Shiho Noda<sup>1</sup></a>&emsp;
+    <a href='https://atsumiyai.github.io/' target='_blank'>Atsuyuki Miyai<sup>1</sup></a>&emsp;
+    <a href='https://yu1ut.com/' target='_blank'>Qing Yu<sup>1,2</sup></a>&emsp;
+    <a href='https://scholar.google.co.jp/citations?hl=ja&user=2bCSG1AAAAAJ&view_op=list_works&authuser=1&sortby=pubdate' target='_blank'>Go Irie<sup>3</sup></a>&emsp;
+    <a href='https://scholar.google.co.jp/citations?user=CJRhhi0AAAAJ&hl=en' target='_blank'>Kiyoharu Aizawa<sup>1</sup></a>
+</div>
+<div align="center">
+    <sup>1</sup>The University of Tokyo&emsp;
+    <sup>2</sup>LY Corporation&emsp;
+    <sup>3</sup>Tokyo University of Science&emsp;
+    <br>
+</div>
+
 ![ood_x_benchmark](figures/ood_x_benchmark.png)
+
+
+
+
 
 ## Abstract
 Conventional benchmarks have reached performance saturation, making it difficult to compare recent OOD detection methods. To address this challenge, we introduce **three novel OOD detection benchmarks** that enable a deeper understanding of method characteristics and reflect real-world conditions. First, we present **ImageNet-X**, designed to evaluate performance under challenging semantic shifts. Second, we propose **ImageNet-FS-X** for full-spectrum OOD detection, assessing robustness to covariate shifts (feature distribution shifts). Finally, we propose **Wilds-FS-X**, which extends these evaluations to real-world datasets, offering a more comprehensive testbed. Our experiments reveal that recent CLIP-based OOD detection methods struggle to varying degrees across the three proposed benchmarks, and none of them consistently outperforms the others. We hope the community goes beyond specific benchmarks and includes more challenging conditions reflecting real-world scenarios. 
