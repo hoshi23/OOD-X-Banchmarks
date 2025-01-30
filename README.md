@@ -1,6 +1,11 @@
-# OOD-X-Banchmarks
+# A Benchmark and Evaluation for Real-World Out-of-Distribution Detection Using Vision-Language Model
+|🎉 Introducing our new benchmarks for out-of-distribution (OOD) detection!  It's more challenging & closer to real-world scenarios, paving the way for real-world OOD detection 🚀|
+|-----------------------------------------|
 
 ![ood_x_benchmark](figures/ood_x_benchmark.png)
+
+## Abstract
+Conventional benchmarks have reached performance saturation, making it difficult to compare recent OOD detection methods. To address this challenge, we introduce **three novel OOD detection benchmarks** that enable a deeper understanding of method characteristics and reflect real-world conditions. First, we present **ImageNet-X**, designed to evaluate performance under challenging semantic shifts. Second, we propose **ImageNet-FS-X** for full-spectrum OOD detection, assessing robustness to covariate shifts (feature distribution shifts). Finally, we propose **Wilds-FS-X**, which extends these evaluations to real-world datasets, offering a more comprehensive testbed. Our experiments reveal that recent CLIP-based OOD detection methods struggle to varying degrees across the three proposed benchmarks, and none of them consistently outperforms the others. We hope the community goes beyond specific benchmarks and includes more challenging conditions reflecting real-world scenarios. 
 
 ## Get Started
 
@@ -173,3 +178,51 @@ This part lists all the methods we include in this codebase.
 ### How to add custom trainer
 
 If you want to add a new trainer, please refer to `trainers/trainer_templete.py` and implement the addition accordingly.
+
+
+
+
+## Citation
+If you find our paper helpful for your research, please consider citing the following paper:
+```bibtex
+@article{noda2025oodx,
+  title={A Benchmark and Evaluation for Real-World Out-of-Distribution Detection Using Vision-Language Model},
+  author={Noda, Shiho and Miyai, Atsuyuki and Yu, Qing and Irie, Go and Aizawa, Kiyoharu},
+  journal={hogehgeo},
+  year={2025}
+}
+```
+
+
+Besides, please also consider citing our other projects that are closely related to this paper.    
+
+
+```bibtex
+
+# GL-MCM (Zero-shot OOD detection)
+@article{miyai2025gl,
+  title={GL-MCM: Global and Local Maximum Concept Matching for Zero-Shot Out-of-Distribution Detection},
+  author={Miyai, Atsuyuki and Yu, Qing and Irie, Go and Aizawa, Kiyoharu},
+  journal={International Journal of Computer Vision},
+  pages={1--11},
+  year={2025},
+  publisher={Springer}
+}
+
+
+# LoCoOp (Few-shot OOD detection, Concurrent work with PEFT-MCM)
+@inproceedings{miyai2023locoop,
+  title={LoCoOp: Few-Shot Out-of-Distribution Detection via Prompt Learning},
+  author={Miyai, Atsuyuki and Yu, Qing and Irie, Go and Aizawa, Kiyoharu},
+  booktitle={NeurIPS},
+  year={2023}
+}
+
+# Survey on OOD detection in VLM era
+@article{miyai2024generalized2,
+  title={Generalized Out-of-Distribution Detection and Beyond in Vision Language Model Era: A Survey},
+  author={Miyai, Atsuyuki and Yang, Jingkang and Zhang, Jingyang and Ming, Yifei and Lin, Yueqian and Yu, Qing and Irie, Go and Joty, Shafiq and Li, Yixuan and Li, Hai and Liu, Ziwei and Yamasaki, Toshihiko and Aizawa, Kiyoharu},
+  journal={arXiv preprint arXiv:2407.21794},
+  year={2024}
+}
+```
