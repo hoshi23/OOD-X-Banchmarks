@@ -206,7 +206,7 @@ If you find our paper helpful for your research, please consider citing the foll
 @article{noda2025oodx,
   title={A Benchmark and Evaluation for Real-World Out-of-Distribution Detection Using Vision-Language Models},
   author={Noda, Shiho and Miyai, Atsuyuki and Yu, Qing and Irie, Go and Aizawa, Kiyoharu},
-  journal={hogehgeo},
+  journal={arXiv preprint arXiv:2501.18463},
   year={2025}
 }
 ```
